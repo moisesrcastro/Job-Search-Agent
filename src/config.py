@@ -28,6 +28,28 @@ class ModelConfigSchema:
     provider: Dict[str, Any]
 
 
+@dataclass
+class DatabaseConfigSchema:
+
+    host: str
+
+    port: int
+
+    database: str
+
+    user: str
+
+    password: str
+
+    uri: str
+
+
+@dataclass
+class AppConfigSchema:
+
+    max_messages_to_summary: int
+
+
 model_config = ModelConfigSchema(
 
     api_key=os.getenv("OPENROUTER_API_KEY", ""),
@@ -39,17 +61,58 @@ model_config = ModelConfigSchema(
     port=8000,
 
     models=[
-
-        "google/gemma-3-27b-it",
-        "meta-llama/llama-3.3-70b-instruct",
-        "mistralai/mistral-small-3.1-24b-instruct"
+        "meta-llama/llama-3.3-70b-instruct"
     ],
 
     temperature=0.0,
 
-    max_tokens=500,
+    max_tokens=5000,
 
     provider={
         "sort": "throughput"
     }
+)
+
+
+database_config = DatabaseConfigSchema(
+
+    host=os.getenv("POSTGRES_HOST", "localhost"),
+
+    port=int(
+        os.getenv(
+            "POSTGRES_PORT",
+            "5432"
+        )
+    ),
+
+    database=os.getenv(
+        "POSTGRES_DB",
+        "jobfinder"
+    ),
+
+    user=os.getenv(
+        "POSTGRES_USER",
+        "postgres"
+    ),
+
+    password=os.getenv(
+        "POSTGRES_PASSWORD",
+        "postgres"
+    ),
+
+    uri=os.getenv(
+        "POSTGRES_URI",
+        "postgresql+asyncpg://postgres:postgres@localhost:5432/jobfinder"
+    )
+)
+
+
+app_config = AppConfigSchema(
+
+    max_messages_to_summary=int(
+        os.getenv(
+            "MAX_MESSAGES_TO_SUMMARIZE",
+            "6"
+        )
+    )
 )
