@@ -28,7 +28,6 @@ preferences_service = PreferencesService()
 class JobState(TypedDict):
 
     messages: Annotated[List[AnyMessage], add_messages]
-    is_final_response: bool
 
     role: Optional[str]
 

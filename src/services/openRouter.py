@@ -38,7 +38,7 @@ class OpenRouterService:
                         }
                     },
                     temperature=self.config.temperature,
-                    max_tokens=500
+                    max_tokens=self.config.max_tokens
                 )
 
             response = await asyncio.to_thread(call_api)
